@@ -7,7 +7,7 @@
 in {
   collectImportsList = path:
     path
-    |> filesystem.listFilesRecursive
+    |> filesystem.listFilesNonRecursive
     |> lib.lists.filter (p: builtins.baseNameOf p != "default.nix");
 
   loadImportsList = args:
