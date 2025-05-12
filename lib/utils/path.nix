@@ -1,5 +1,5 @@
 {lib, ...}: {
-  relativeToRoot = lib.path.append ../.;
+  relativeToRoot = lib.path.append ../../.;
   collectImports = path:
     path
     |> builtins.readDir
