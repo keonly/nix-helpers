@@ -8,10 +8,6 @@
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs-lib";
     };
-    haumea = {
-      url = "github:nix-community/haumea";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
@@ -19,7 +15,6 @@
     nixpkgs,
     nixpkgs-lib,
     flake-parts,
-    haumea,
   } @ inputs: let
     defaultSystems = [
       "aarch64-linux"
@@ -29,9 +24,8 @@
     ];
   in
     flake-parts.lib.mkFlake {inherit inputs;} {
-      flake.lib = import (builtins.path {path = ./lib;}) {
+      flake.lib = import ./lib {
         inherit (nixpkgs-lib) lib;
-        inherit haumea;
       };
 
       systems = defaultSystems;
