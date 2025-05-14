@@ -2,8 +2,10 @@
   lib,
   haumea,
   ...
-}: {
-  attrsets = import ./attrsets.nix {inherit lib;};
-  filesystem = import ./filesystem.nix {inherit lib;};
-  path = import ./path.nix {inherit lib haumea;};
+}: let
+  callLibs = file: import file {inherit lib haumea;};
+in {
+  attrsets = callLibs ./attrsets.nix;
+  filesystem = callLibs ./filesystem.nix;
+  path = callLibs ./path.nix;
 }
