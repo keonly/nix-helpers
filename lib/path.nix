@@ -2,9 +2,9 @@
   lib,
   haumea,
   ...
-}: {
-  filesystem = import ./filesystem.nix;
-
+}: let
+  filesystem = import ./filesystem.nix {inherit lib;};
+in {
   collectImportsList = path:
     path
     |> filesystem.listFilesRecursive
