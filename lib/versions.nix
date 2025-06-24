@@ -7,4 +7,6 @@
       else currentMax)
     (builtins.head versions)
     (builtins.tail versions);
+
+  versionAtLeast = a: b: builtins.compareVersions a b >= 0;
 }
