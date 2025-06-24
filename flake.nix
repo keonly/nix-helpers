@@ -2,7 +2,6 @@
   description = "A stash of reusable Nix helpers";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     nixpkgs-lib.url = "github:nix-community/nixpkgs.lib";
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
@@ -12,7 +11,6 @@
 
   outputs = {
     self,
-    nixpkgs,
     nixpkgs-lib,
     flake-parts,
   } @ inputs: let
