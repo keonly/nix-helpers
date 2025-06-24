@@ -29,7 +29,7 @@
     ];
   in
     flake-parts.lib.mkFlake {inherit inputs;} {
-      flake.lib = import ./lib {
+      flake.lib = import (builtins.path {path = ./lib;}) {
         inherit (nixpkgs-lib) lib;
         inherit haumea;
       };
