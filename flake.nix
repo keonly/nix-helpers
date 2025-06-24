@@ -16,19 +16,15 @@
     nixpkgs-lib,
     flake-parts,
   } @ inputs: let
-    defaultSystems = [
-      "aarch64-linux"
-      "aarch64-darwin"
-      "x86_64-darwin"
-      "x86_64-linux"
-    ];
+    systems = nixpkgs-lib.systems.flakeExposed;
   in
     flake-parts.lib.mkFlake {inherit inputs;} {
+      inherit systems;
+
       flake.lib = import ./lib {
         inherit (nixpkgs-lib) lib;
       };
 
-      systems = defaultSystems;
       perSystem = {pkgs, ...}: {
         formatter = pkgs.alejandra;
       };
