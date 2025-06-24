@@ -4,7 +4,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     nixpkgs-lib.url = "github:nix-community/nixpkgs.lib";
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs-lib";
+    };
     haumea = {
       url = "github:nix-community/haumea";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -15,14 +18,25 @@
     self,
     nixpkgs,
     nixpkgs-lib,
-    flake-utils,
+    flake-parts,
     haumea,
-  } @ inputs:
-    {
-      lib = import ./lib {
+  } @ inputs: let
+    defaultSystems = [
+      "aarch64-linux"
+      "aarch64-darwin"
+      "x86_64-darwin"
+      "x86_64-linux"
+    ];
+  in
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      flake.lib = import ./lib {
         inherit (nixpkgs-lib) lib;
         inherit haumea;
       };
-    }
-    // flake-utils.lib.eachDefaultSystem (system: {formatter = nixpkgs.legacyPackages.${system}.alejandra;});
+
+      systems = defaultSystems;
+      perSystem = {pkgs, ...}: {
+        formatter = pkgs.alejandra;
+      };
+    };
 }
