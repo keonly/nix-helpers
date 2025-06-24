@@ -1,4 +1,6 @@
-{lib, ...}: {
+{lib, ...}: let
+  filesystem = import ./filesystem.nix {inherit lib;};
+in {
   collectImportsList = path:
     path
     |> filesystem.listFilesNonRecursive
