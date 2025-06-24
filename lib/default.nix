@@ -1,8 +1,3 @@
 {lib, ...}: {
-  attrsets = import ./utils/attrsets.nix {inherit lib;};
-  path = import ./utils/path.nix {inherit lib;};
-
-  homeManagerBlock = import ./systems/home-manager-block.nix;
-  darwinSystem = import ./systems/darwin-system.nix;
-  nixosSystem = import ./systems/nixos-system.nix;
+  attrsets = import ./attrsets.nix {inherit lib;};
 }
